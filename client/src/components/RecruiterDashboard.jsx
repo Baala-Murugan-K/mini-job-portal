@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const EXPRESS_BASE_URL = 'http://127.0.0.1:5000';
+const EXPRESS_BASE_URL = import.meta.env.VITE_EXPRESS_URL || 'http://127.0.0.1:5000';
 
 export default function RecruiterDashboard({ jobs, onJobCreated }) {
   const [selectedJob, setSelectedJob] = useState(jobs[0] || null);

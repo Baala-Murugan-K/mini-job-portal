@@ -5,7 +5,7 @@ import ApplyModal from './components/ApplyModal';
 import RecruiterDashboard from './components/RecruiterDashboard';
 import ContactModal from './components/ContactModal';
 
-const EXPRESS_BASE_URL = 'http://127.0.0.1:5000';
+const EXPRESS_BASE_URL = import.meta.env.VITE_EXPRESS_URL || 'http://127.0.0.1:5000';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('candidate'); // 'candidate' | 'recruiter'

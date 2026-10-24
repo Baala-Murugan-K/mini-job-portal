@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const PHP_UPLOAD_URL = 'http://127.0.0.1:8000/upload.php';
-const EXPRESS_API_URL = 'http://127.0.0.1:5000/api/applications';
+const PHP_UPLOAD_URL = (import.meta.env.VITE_PHP_URL || 'http://127.0.0.1:8000') + '/upload.php';
+const EXPRESS_API_URL = (import.meta.env.VITE_EXPRESS_URL || 'http://127.0.0.1:5000') + '/api/applications';
 
 export default function ApplyModal({ job, onClose, onSuccess }) {
   const [formData, setFormData] = useState({

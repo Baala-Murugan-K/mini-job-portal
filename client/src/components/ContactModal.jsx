@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PHP_FEEDBACK_URL = 'http://127.0.0.1:8000/feedback.php';
+const PHP_FEEDBACK_URL = (import.meta.env.VITE_PHP_URL || 'http://127.0.0.1:8000') + '/feedback.php';
 
 export default function ContactModal({ onClose }) {
   const [formData, setFormData] = useState({
