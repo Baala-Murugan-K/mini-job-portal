@@ -1,0 +1,24 @@
+Karthik Selvam
+Full Stack Web Developer
+Chennai, Tamil Nadu | karthik.dev@example.com | +91 98765 43210
+
+PROFESSIONAL SUMMARY
+Passionate Full Stack Developer with 3+ years experience building web applications.
+Specialized in React.js frontend architecture, Node.js and Express REST APIs, and MongoDB database modeling.
+Hands-on experience with PHP file management, Python text processing, Docker containerization, and Git.
+
+TECHNICAL SKILLS
+- Frontend: React.js, Redux, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS
+- Backend: Node.js, Express.js, PHP, Python, REST APIs
+- Databases: MongoDB, Mongoose, MySQL, PostgreSQL
+- Tools: Git, GitHub, Docker, Postman, Linux
+
+WORK EXPERIENCE
+Junior Full Stack Engineer - TechCorp Solutions (2024 - Present)
+- Developed responsive candidate-facing job portals using React and Express.
+- Implemented secure file uploads in PHP with rigorous MIME and size validation.
+- Integrated Python-based microservices for resume keyword matching and scoring.
+
+EDUCATION
+B.Tech in Computer Science and Engineering (2020 - 2024)
+Anna University, Chennai

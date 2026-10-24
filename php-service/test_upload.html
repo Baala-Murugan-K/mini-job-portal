@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test PHP Resume Upload</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .row { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="file"], button { padding: 10px; width: 100%; box-sizing: border-box; }
+        button { background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f3f4f6; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <h2>Test PHP Upload Service</h2>
+    <form id="uploadForm">
+        <div class="row">
+            <label for="resume">Select Resume (PDF, DOC, DOCX, TXT):</label>
+            <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx,.txt" />
+        </div>
+        <div class="row">
+            <button type="submit">Upload Resume</button>
+        </div>
+    </form>
+    <h3>Server Response:</h3>
+    <pre id="responseOutput">No upload yet.</pre>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const output = document.getElementById('responseOutput');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('resume');
+            if (!fileInput.files.length) return alert('Select a file');
+
+            const formData = new FormData();
+            formData.append('resume', fileInput.files[0]);
+
+            try {
+                output.textContent = 'Uploading...';
+                const res = await fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                output.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                output.textContent = 'Error: ' + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
