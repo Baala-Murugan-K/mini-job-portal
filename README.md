@@ -1,15 +1,16 @@
 # 💼 Mini Job Portal (with Resume Matching)
 
-[![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
-[![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?logo=node.js&logoColor=white)](https://expressjs.com/)
-[![Python](https://img.shields.io/badge/Matcher-Python%203.11%20%2B%20Flask-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![PHP](https://img.shields.io/badge/Ingestion-PHP%208.2-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![Vercel Deployment](https://img.shields.io/badge/Frontend-Vercel-black?logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render Deployment](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render&logoColor=white)](https://render.com/)
+[![React](https://img.shields.io/badge/UI-React%2018%20%2B%20Vite-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Core%20API-Node.js%20%2B%20Express-339933?logo=node.js&logoColor=white)](https://expressjs.com/)
+[![Python](https://img.shields.io/badge/Matcher-Python%20%2B%20Flask-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![PHP](https://img.shields.io/badge/Ingestion-PHP-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![MongoDB Atlas](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
-A modern, polyglot recruitment platform demonstrating true **Separation of Concerns**. Instead of forcing all workloads into an unnatural monolith, each technology is assigned to its natural engineering advantage:
+A modern, polyglot recruitment platform built on the principle of **Separation of Concerns**. Instead of forcing all workloads into an unnatural monolith, each technology is assigned to its natural engineering strength:
 
-- **React.js**: High-performance Single Page Application (Candidate job discovery & Recruiter leaderboard).
+- **React.js**: High-performance Single Page Application (Candidate job discovery, filter pills & Recruiter leaderboard).
 - **PHP**: Dedicated, secure file ingestion microservice handling multipart upload validation & MIME checks.
 - **Node.js + Express**: Core orchestrator and REST API handling business logic, MongoDB persistence, and microservice coordination.
 - **Python (Flask)**: Text extraction engine (`pypdf`) computing deterministic skill-match scores against job requirements.
@@ -22,7 +23,7 @@ A modern, polyglot recruitment platform demonstrating true **Separation of Conce
 ```
                      ┌──────────────────────────────────────────────┐
                      │            React Frontend (SPA)              │
-                     │          http://localhost:3000               │
+                     │                 (Vercel)                     │
                      └──────┬────────────────────────────────┬──────┘
                             │                                │
             1. POST Resume  │                                │ 3. POST Application
@@ -30,61 +31,78 @@ A modern, polyglot recruitment platform demonstrating true **Separation of Conce
                             ▼                                ▼
        ┌───────────────────────────────┐     ┌───────────────────────────────┐
        │     PHP Ingestion Service     │     │     Node + Express API        │
-       │     http://localhost:8000     │     │     http://localhost:5000     │
+       │           (Render)            │     │           (Render)            │
        └──────────────┬────────────────┘     └───────┬───────────────┬───────┘
                       │                              │               │
        2. Validates & │ Writes to                    │               │
           returns safe Path                          │               │
                       ▼                              │ 4. POST       │ 6. Query
             ┌───────────────────┐                    │    Path &     │    Ranked
-            │   Shared Upload   │                    │    Skills     │    Applicants
-            │   Volume Storage  │                    ▼               ▼
+            │   Uploads Folder  │                    │    Skills     │    Applicants
+            │   Storage Buffer  │                    ▼               ▼
             └───────────────────┘     ┌────────────────────────┐  ┌─────────────┐
                       ▲               │  Python Match Engine   │  │   MongoDB   │
-                      │               │ http://localhost:5001  │  │    Atlas    │
-                      └───────────────┤ (pypdf Text Extraction)│  │  (Cluster0) │
+                      │               │        (Render)        │  │    Atlas    │
+                      └───────────────┤ (pypdf Text Extraction)│  │ (Cloud DB)  │
                          5. Reads PDF └────────────────────────┘  └─────────────┘
                             Binary & Scores Keywords
 ```
 
 ---
 
-## 🐳 Primary Deployment: Method B (Docker Compose)
+## 🚀 Deployment Guide (Vercel + Render)
 
-Deploy the entire 4-service ecosystem with a single command! All microservices, environment variables, network routing, and shared upload volumes are pre-configured in [`docker-compose.yml`](docker-compose.yml).
+This multi-service project deploys seamlessly across **Vercel** (for CDN-cached Frontend) and **Render** (for Backend Microservices).
 
-### Prerequisites
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
-
-### 1-Command Startup
-```bash
-# 1. Clone the repository
-git clone https://github.com/Baala-Murugan-K/mini-job-portal.git
-cd mini-job-portal
-
-# 2. Build and launch all 4 containers in detached mode
-docker compose up --build -d
-```
-
-### 🌐 Accessing Services
-
-| Service | Container Name | Local URL | Role |
-|---|---|---|---|
-| **React SPA** | `jobportal-client` | **http://localhost:3000** | Candidate portal & Recruiter dashboard |
-| **Express Core API** | `jobportal-server` | **http://localhost:5000** | REST API (`/api/jobs`, `/api/applications`) |
-| **Python Matcher** | `jobportal-python` | **http://localhost:5001** | Microservice (`/match`, `/health`) |
-| **PHP Upload Engine** | `jobportal-php` | **http://localhost:8000** | Upload validator (`/upload.php`, `/feedback.php`) |
-
-To stop the containers:
-```bash
-docker compose down
-```
+### 1. Frontend Deployment on Vercel (React SPA)
+1. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
+2. Import your GitHub repository: `Baala-Murugan-K/mini-job-portal`.
+3. Configure the Project Settings:
+   - **Framework Preset**: `Vite`
+   - **Root Directory**: `client`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Add **Environment Variables** in Vercel:
+   - `VITE_EXPRESS_URL`: `https://your-node-server.onrender.com`
+   - `VITE_PHP_URL`: `https://your-php-service.onrender.com`
+5. Click **Deploy**!
 
 ---
 
-## 💻 Alternative: Running Locally (Without Docker)
+### 2. Backend Services on Render
 
-If you prefer running services directly on Windows / Linux terminals:
+Create free Web Services on [render.com](https://render.com) from the same repository:
+
+#### A. Node.js + Express API (`server`)
+- Click **"New Web Service"** & connect your repository.
+- **Root Directory**: `server`
+- **Runtime**: `Node`
+- **Build Command**: `npm install`
+- **Start Command**: `node server.js`
+- **Environment Variables**:
+  - `PORT`: `5000`
+  - `MONGO_URI`: `your_mongodb_atlas_connection_string` *(Securely stored in Render dashboard, never committed to git!)*
+  - `PYTHON_SERVICE_URL`: `https://your-python-service.onrender.com/match`
+
+#### B. Python Resume Matcher (`python-service`)
+- Click **"New Web Service"** & connect your repository.
+- **Root Directory**: `python-service`
+- **Runtime**: `Python 3`
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `python app.py`
+- **Environment Variables**:
+  - `PORT`: `5001`
+
+#### C. PHP Ingestion Service (`php-service`)
+- Click **"New Web Service"** & connect your repository.
+- **Root Directory**: `php-service`
+- **Runtime**: `Native Environment` (or run locally/emulator).
+
+---
+
+## 💻 Local Development Setup
+
+To run all 4 services locally on your machine:
 
 ```bash
 # 1. Start PHP Service (Port 8000)
@@ -104,13 +122,13 @@ cd client
 npm install && npm run dev
 ```
 
-> **Pro-Tip:** You can also simply double-click **`start_all.bat`** in the root directory to spawn all 4 terminal processes simultaneously!
+> **Pro-Tip:** Double-click **`start_all.bat`** in the root directory to launch all 4 services simultaneously!
 
 ---
 
 ## 🛡️ The 5-Layer PHP Security Wall (`upload.php`)
 
-File uploads are a notorious security vector. The PHP microservice implements a strict 5-stage validation wall before accepting any file:
+File uploads are a sensitive security vector. The PHP microservice implements a strict 5-stage validation wall before accepting any file:
 
 1. **Size Limitation**: Max `5MB` enforced before processing to mitigate Denial-of-Service (DoS) disk exhaustion attacks.
 2. **Double-Layer Extension Whitelist**: Strictly matches against `['pdf', 'doc', 'docx', 'txt']`.
@@ -198,14 +216,6 @@ Review before your technical or system design interviews:
 
 - 📄 **Compiled PDF Revision Guide**: [Mini_Job_Portal_Interview_Overview.pdf](Mini_Job_Portal_Interview_Overview.pdf) *(361 KB)*
 - 🌐 **Interactive HTML Guide**: [Interview_Overview.html](Interview_Overview.html)
-
-### Key Discussion Points:
-1. **Why not connect PHP to MongoDB?**
-   *Connecting PHP to MongoDB introduces custom PECL driver overhead and tight coupling. By keeping PHP stateless as an ingestion microservice, Express coordinates all database operations cleanly.*
-2. **Why deterministic matching instead of ML/LLM?**
-   *Simple keyword scoring is instantaneous, mathematically verifiable, free from LLM hallucinations, and requires zero expensive GPU infrastructure.*
-3. **What is `move_uploaded_file()`?**
-   *Unlike `copy()` or `rename()`, `move_uploaded_file()` calls `is_uploaded_file()` to ensure the file originated from an authentic HTTP POST, preventing Local File Inclusion (LFI) attacks.*
 
 ---
 
