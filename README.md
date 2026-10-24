@@ -210,15 +210,6 @@ Application.find({ jobId }).sort({ matchPercentage: -1 });
 
 ---
 
-## 🎯 Interview Cheat Sheet & Architecture Defense
-
-Review before your technical or system design interviews:
-
-- 📄 **Compiled PDF Revision Guide**: [Mini_Job_Portal_Interview_Overview.pdf](Mini_Job_Portal_Interview_Overview.pdf) *(361 KB)*
-- 🌐 **Interactive HTML Guide**: [Interview_Overview.html](Interview_Overview.html)
-
----
-
 ## 👤 Author
 
 **Baala Murugan K**
